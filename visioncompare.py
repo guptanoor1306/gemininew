@@ -18,20 +18,24 @@ def get_gemini_response(input, image):
         response = model.generate_content(image)
     return response.text
 
-# Function to compare two images
-def compare_images(image1, image2):
+# Function to compare two images based on input prompt
+def compare_images(input, image1, image2):
     model = genai.GenerativeModel('gemini-pro-vision')
-    response1 = model.generate_content(image1)
-    response2 = model.generate_content(image2)
+    response1 = model.generate_content([input, image1])
+    response2 = model.generate_content([input, image2])
     
-    # Example comparison logic: comparing the dominant colors or other attributes
+    # Example comparison logic: comparing the responses based on the input prompt
     comparison_result = {
         'image1': response1.text,
         'image2': response2.text,
-        'comparison': {}
+        'comparison': {
+            'input_prompt': input,
+            'response1': response1.text,
+            'response2': response2.text
+        }
     }
     
-    # Add your own comparison logic here
+    # Add your own comparison logic here based on the responses
     # For demonstration, we just show both responses
     return comparison_result
 
@@ -56,7 +60,7 @@ submit = st.button("Compare the images")
 
 # If submit button is clicked
 if submit and image1 is not None and image2 is not None:
-    response = compare_images(image1, image2)
+    response = compare_images(input, image1, image2)
     st.subheader("The Comparison Result is")
     st.write(response)
 elif submit:
