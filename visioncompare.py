@@ -9,7 +9,7 @@ API_KEY = "AIzaSyDyjhSAk0aI5Q_LRYqyvhBaEg3mGmIN4_M"
 # Configure the generative AI client with the API key
 genai.configure(api_key=API_KEY)
 
-# Function to load OpenAI model and get response for a single image
+# Function to load OpenAI model and get response for a single image with a prompt
 def get_gemini_response(input, image):
     model = genai.GenerativeModel('gemini-pro-vision')
     response = model.generate_content([input, image])
@@ -23,7 +23,8 @@ def compare_images(input, image1, image2):
     response2 = model.generate_content([input, image2])
     
     # Combine the analysis of both images for a comparison
-    combined_response = model.generate_content([input, response1.text, response2.text])
+    combined_analysis = f"Image 1 Analysis: {response1.text}\nImage 2 Analysis: {response2.text}\nAre these images related?"
+    combined_response = model.generate_content([combined_analysis])
     
     # Create a structured comparison result
     comparison_result = {
