@@ -9,31 +9,34 @@ API_KEY = "AIzaSyDyjhSAk0aI5Q_LRYqyvhBaEg3mGmIN4_M"
 # Configure the generative AI client with the API key
 genai.configure(api_key=API_KEY)
 
-# Function to load OpenAI model and get response for a single image with a prompt
+# Function to load OpenAI model and get response for a single image
 def get_gemini_response(input, image):
     model = genai.GenerativeModel('gemini-pro-vision')
-    response = model.generate_content([input, image])
+    if input != "":
+        response = model.generate_content([input, image])
+    else:
+        response = model.generate_content(image)
     return response.text
 
 # Function to compare two images based on input prompt
 def compare_images(input, image1, image2):
     model = genai.GenerativeModel('gemini-pro-vision')
-    # Generate responses for both images with the input prompt
     response1 = model.generate_content([input, image1])
     response2 = model.generate_content([input, image2])
     
-    # Combine the analysis of both images for a comparison
-    combined_analysis = f"Image 1 Analysis: {response1.text}\nImage 2 Analysis: {response2.text}\nAre these images related?"
-    combined_response = model.generate_content([combined_analysis])
-    
-    # Create a structured comparison result
+    # Example comparison logic: comparing the responses based on the input prompt
     comparison_result = {
-        'input_prompt': input,
-        'image1_analysis': response1.text,
-        'image2_analysis': response2.text,
-        'comparison': combined_response.text
+        'image1': response1.text,
+        'image2': response2.text,
+        'comparison': {
+            'input_prompt': input,
+            'response1': response1.text,
+            'response2': response2.text
+        }
     }
     
+    # Add your own comparison logic here based on the responses
+    # For demonstration, we just show both responses
     return comparison_result
 
 # Initialize our Streamlit app
