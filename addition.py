@@ -12,15 +12,15 @@ with col1:
 with col2:
     number2 = st.number_input("Second number:", format="%f")
 
-# Convert float inputs to integers
-number1 = int(number1)
-number2 = int(number2)
-
 # Input for user's answer
-user_answer = st.number_input("What is the sum of these numbers?", format="%d")
+user_answer = st.number_input("What is the sum of these numbers?")
 
 # Button to submit the answer
 submit = st.button("Check my answer")
+
+# Convert float inputs to integers
+number1 = int(number1)
+number2 = int(number2)
 
 # This function provides instructional feedback
 def provide_feedback(num1, num2, user_ans):
