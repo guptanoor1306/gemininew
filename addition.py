@@ -5,12 +5,15 @@ st.set_page_config(page_title="Addition Tutor")
 
 st.header("Learn to Add with AI")
 
-# Input fields for numbers
-number1 = st.number_input("Enter first number:")
-number2 = st.number_input("Enter second number:")
+# Input fields for numbers side by side
+col1, col2 = st.columns(2)
+with col1:
+    number1 = st.number_input("First number:", format="%d")
+with col2:
+    number2 = st.number_input("Second number:", format="%d")
 
 # Input for user's answer
-user_answer = st.number_input("What is the sum of these two numbers?")
+user_answer = st.number_input("What is the sum of these numbers?", format="%d")
 
 # Button to submit the answer
 submit = st.button("Check my answer")
