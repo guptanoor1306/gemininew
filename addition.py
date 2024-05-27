@@ -10,9 +10,13 @@ st.header("Learn to Add with AI")
 # Input fields for numbers side by side
 col1, col2 = st.columns(2)
 with col1:
-    number1 = st.number_input("First number:", format="%d")
+    number1 = st.number_input("First number:", format="%f")
 with col2:
-    number2 = st.number_input("Second number:", format="%d")
+    number2 = st.number_input("Second number:", format="%f")
+
+# Convert float inputs to integers
+number1 = int(number1)
+number2 = int(number2)
 
 # Input for user's answer
 user_answer = st.number_input("What is the sum of these numbers?")
